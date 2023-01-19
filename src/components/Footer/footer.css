@@ -1,0 +1,45 @@
+.icon span i{
+    font-size: 2.2rem ;
+    background:var(--primary-color); 
+    padding: 10px; 
+    border-radius: 50px; 
+    color:#fff; 
+    font-weight: 400 !important; 
+    margin: 8px;
+    cursor: pointer;
+    
+}
+.icon{
+    text-align: center;
+    padding: 15px;
+ 
+}
+.footer__copyright{
+    text-align: center;
+}
+.ps-0 i{
+    color:rgb(142, 139, 139)
+}
+
+.footer{
+    padding-top: 40px;
+    padding-bottom: 30px; 
+    background-color: var(--primary-color);
+    
+}
+.footer__text{
+    text-align: center;
+    line-height: 30px; 
+    color:rgba(255,255,255,0.735);
+}
+.footer__quick-links ul li{
+    background:transparent !important; 
+}
+.footer__quick-links ul li a{
+    color:#8a8a8a;
+}
+.quick__links-title{
+    margin-bottom: 20px; 
+    color: #fff; 
+    font-size: 1.1rem;
+}

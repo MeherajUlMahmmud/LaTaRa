@@ -1,0 +1,10 @@
+.main_sec{
+    background:#eef4fc;
+    width:auto;
+    height:40px;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+.cat_sec{
+    color:black;
+}

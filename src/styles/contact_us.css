@@ -1,0 +1,69 @@
+.contact__section{
+    padding:50px; 
+}
+.wrapper{
+    width: 100%;
+    -webkit-box-shadow: 0px 21px 41px -13px rgba(0, 0, 0, 0.18);
+    -moz-box-shadow: 0px 21px 41px -13px rgba(0, 0, 0, 0.18);
+    box-shadow: 0px 21px 41px -13px rgba(0, 0, 0, 0.18);
+}
+.contact__wrap{
+    background: rgba(127, 39, 156, 1);
+    background: -moz-linear-gradient(
+      -45deg,
+      rgba(127, 39, 156, 1) 0%,
+      rgba(46, 39, 157, 1) 100%
+    );
+    background: -webkit-gradient(
+      left top,
+      right bottom,
+      color-stop(0%, rgba(127, 39, 156, 1)),
+      color-stop(100%, rgba(46, 39, 157, 1))
+    );
+    background: -webkit-linear-gradient(
+      -45deg,
+      rgba(127, 39, 156, 1) 0%,
+      rgba(46, 39, 157, 1) 100%
+    );
+    background: -o-linear-gradient(
+      -45deg,
+      rgba(127, 39, 156, 1) 0%,
+      rgba(46, 39, 157, 1) 100%
+    );
+    background: -ms-linear-gradient(
+      -45deg,
+      rgba(127, 39, 156, 1) 0%,
+      rgba(46, 39, 157, 1) 100%
+    );
+    background: linear-gradient(
+      135deg,
+      rgba(127, 39, 156, 1) 0%,
+      rgba(46, 39, 157, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7f279c', endColorstr='#2e279d', GradientType=1 );
+}
+
+.form-group {
+    padding:10px; 
+    border-radius: 10px;
+    background:transparent; 
+    width: 300px;
+}
+.input_box{
+    background:transparent; 
+    color:white; 
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+.input_box :focus{
+    outline: none; 
+    text-decoration: none !important; 
+    box-shadow: none;
+    border: rgb(67, 67, 67);
+}
+.btn-primary {
+    background: #d62196 !important;
+    border-color: #d62196 !important;
+    color: #fff;
+  }
