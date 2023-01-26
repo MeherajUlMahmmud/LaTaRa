@@ -18,7 +18,6 @@ const ProductCard = ({ item }) => {
             imgUrl: item.imgUrl,
 
         }));
-        saveStorage('cart', item)
         toast.success('Product added to Cart')
     };
 
