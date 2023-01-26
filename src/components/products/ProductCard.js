@@ -6,7 +6,6 @@ import '../../styles/product-cards.css';
 import { useDispatch } from "react-redux";
 import { cartActions } from '../../redux/cartSlice';
 import { toast } from 'react-toastify';
-import { saveStorage } from '../../utils/persistLocalStorage';
 
 const ProductCard = ({ item }) => {
     const dispatch = useDispatch()
@@ -39,7 +38,9 @@ const ProductCard = ({ item }) => {
                 </Link>
                 <div className='product__card-bottom d-flex align-items-center justify-content-between p-2'>
                     <span className='price'>Tk {item.price} </span>
-                    <motion.span whileTap={{ scale: 1.2 }} className='cart' onClick={addToCart}>Add To Cart</motion.span>
+                    {
+                        item.category !== "upcoming" && (
+                            <motion.span whileTap={{ scale: 1.2 }} className='cart' onClick={addToCart}>Add To Cart</motion.span>)}
                 </div>
 
             </div>
