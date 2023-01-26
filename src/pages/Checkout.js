@@ -31,7 +31,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate('/login', { state: { from: '/checkout' } });
     }
   }, [user, navigate])
 
@@ -54,8 +54,6 @@ const Checkout = () => {
         numberOfCheckedItems++;
         setPayment(pmt);
       }
-
-
       if (numberOfCheckedItems > 1) {
         alert("You can Select Only One Payment Method !");
         // checkboxes = false; 
@@ -75,7 +73,7 @@ const Checkout = () => {
     setCheckout({ ...checkout, [id]: value });
   }
 
-  const modify = { ...checkout, "totalQuantity": totalQty, "subtotal": shipping === '0' ? totalAmount : totalCost, "shipping": shipping ? "Yes" : "No", "Payment": payment, "name": user.displayName, "Email": user.email, }
+  const modify = { ...checkout, "totalQuantity": totalQty, "subtotal": shipping === '0' ? totalAmount : totalCost, "shipping": shipping ? "Yes" : "No", "Payment": payment, "name": user?.displayName, "Email": user?.email, }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -112,10 +110,10 @@ const Checkout = () => {
               <h6>Billing Information</h6>
 
               <FormGroup className='form__group'>
-                <input type="text" id="name" value={user.displayName} disabled onChange={handleInput} required />
+                <input type="text" id="name" value={user?.displayName} disabled onChange={handleInput} required />
               </FormGroup>
               <FormGroup className='form__group'>
-                <input type="text" id="email" placeholder='Enter your Email' value={user.email} disabled />
+                <input type="text" id="email" placeholder='Enter your Email' value={user?.email} disabled />
               </FormGroup>
               <FormGroup className='form__group'>
                 <input type="tel" id="phone" placeholder='Phone Number' onChange={handleInput}
@@ -150,12 +148,42 @@ const Checkout = () => {
 
                   <span>Tk {shipping}</span>
                 </h6>
-                <h6>
-                  <span>Payment method : &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" name="payment" id="Cash" value="Cash" onClick={ValidatePayment} onChange={ValidatePayment} />Cash &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" name="payment" id="Bkash" value="Bkash" onClick={ValidatePayment} onChange={ValidatePayment} />Bkash
-                  </span>
-                </h6>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}>
+                    <div>
+                      <span>Payment Method:&nbsp;</span>
+                    </div>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}>
+                      <div>
+                        <input type="checkbox" name="payment" id="Cash" value="Cash" onClick={ValidatePayment} onChange={ValidatePayment} />&nbsp;Cash
+                      </div>
+                      <div>
+                        <input type="checkbox" name="payment" id="Bkash" value="Bkash" onClick={ValidatePayment} onChange={ValidatePayment} />&nbsp;Bkash
+                      </div>
+                    </div>
+                  </div>
+                  <input type="text" id="transactionId" onChange={handleInput} style={{
+                    display: payment === 'Bkash' ? 'block' : 'none',
+                    width: '100%',
+                    height: '40px',
+                    marginTop: '10px',
+                    borderRadius: '5px',
+                    border: '1px solid #ccc',
+                    padding: '0 10px',
+                    outline: 'none',
+                  }} placeholder='Transaction ID' required={
+                    payment === 'Bkash' ? true : false
+                  } />
+                </div>
                 <h4>Total Cost :
                   {shipping === '0' ?
                     <span> TK {totalAmount}</span>

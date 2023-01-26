@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Container, Row } from 'reactstrap';
 import { NavLink, useNavigate } from "react-router-dom";
 import './header.css';
@@ -11,7 +11,6 @@ import useAuth from "../../custom_user/UseAuth";
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase.config';
 import { toast } from 'react-toastify';
-import { getLocalCart } from '../../utils/helper';
 
 const navlink = [
   {
@@ -32,17 +31,16 @@ const navlink = [
   }
 ]
 const Header = () => {
-  const [cartLength, setCartLength] = useState(0);
+  const totalQuantity = useSelector(state => state.cart.totalQuantity)
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const currentUser = useAuth();
 
-  useEffect(() => {
-    setCartLength(getLocalCart().length)
-  }, [])
+
 
   const stickyHeaderFunc = () => {
+
     window.addEventListener('scroll', () => {
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         headerRef.current.classList.add('sticky__header')
@@ -52,7 +50,6 @@ const Header = () => {
       }
     })
   }
-
   useEffect(() => {
     stickyHeaderFunc();
     return () => window.removeEventListener("scroll", stickyHeaderFunc);
@@ -97,8 +94,8 @@ const Header = () => {
           </div>
           <div className='nav__icons'>
             <span className='cart__icon' onClick={navigateToCart} >
-              <i className="ri-shopping-bag-line"></i>
-              <span className='badge'>{cartLength}</span>
+              <i class="ri-shopping-bag-line"></i>
+              <span className='badge'>{totalQuantity}</span>
             </span>
 
             <div className="profile">
@@ -141,7 +138,7 @@ const Header = () => {
             </div>
 
             <div className='mobile__menu'>
-              <span onClick={menuToggle} className='cart__icon'><i className="ri-menu-line"></i></span>
+              <span onClick={menuToggle} className='cart__icon'><i class="ri-menu-line"></i></span>
             </div>
           </div>
         </div>
