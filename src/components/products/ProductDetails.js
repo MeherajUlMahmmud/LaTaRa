@@ -177,7 +177,8 @@ const ProductDetails = () => {
 
                   </div>
                   <p className='mt-3'>{item.shortDesc}</p>
-                  <motion.button whileTap={{ scale: 1.2 }} className='buy__btn' onClick={addToCart}>Add To Cart</motion.button>
+                  {item.category !== "upcoming" && (
+                    <motion.button whileTap={{ scale: 1.2 }} className='buy__btn' onClick={addToCart}>Add To Cart</motion.button>)}
                 </Col>
               </Row>
             </Container>

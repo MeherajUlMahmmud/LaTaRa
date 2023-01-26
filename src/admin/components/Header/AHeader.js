@@ -1,15 +1,15 @@
-import React from 'react'; 
-import './Aheader.css'; 
-const AdminHeader = ({category,title,link}) => {
-  return(
-  <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <p className="cat_sec">
+import React from 'react';
+import './Aheader.css';
+const AdminHeader = ({ category, title, link }) => {
+  return (
+    <nav className="navbar navbar-light bg-light">
+      <div className="container-fluid">
+        <p className="cat_sec">
           {category}/{title}
-      </p>
-    </div>
-     
-  </nav>
+        </p>
+      </div>
+
+    </nav>
   )
 }
 

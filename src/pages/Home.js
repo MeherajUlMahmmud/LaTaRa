@@ -77,7 +77,7 @@ const Home = () => {
                   halfsilk saree, katan saree, cotton saree, silk sharee and more.</p><br />
                 <Link to='/shop'>
                   <motion.button whileHover={{ scale: 1.1 }} className='shop_btn'>
-                    SHOP NOW <i class="ri-arrow-right-line"></i>
+                    SHOP NOW <i className="ri-arrow-right-line"></i>
                   </motion.button>
                 </Link>
               </div>
@@ -137,7 +137,6 @@ const Home = () => {
                 : " No Products Available "
             }
           </Row>
-
         </Container>
       </section>
       <section className='best__sales'>
@@ -152,9 +151,7 @@ const Home = () => {
                 <ProductList data={upcoming} />
                 : " No Products Available "
             }
-
           </Row>
-
         </Container>
       </section>
     </div>
