@@ -109,11 +109,26 @@ const MyAccount = () => {
                             </div>
                             <div className="col-lg-12">
                                 <div className="d-sm-flex align-items-sm-start justify-content-sm-between">
-                                    <div className="status">Status : {(item.Payment === "Bkash") ? "Delivered" : (item.Payment === "Cash") ? "Shipped" : "Pending"}</div>
+                                    <div className="status">
+                                        Status : {item.status === "pending" ?
+                                            <span style={{ color: "blue" }}>Pending</span>
+                                            : item.status === "confirmed"
+                                                ? <span style={{ color: "green" }}>Confirmed</span>
+                                                : item.status === "shipped"
+                                                    ? <span style={{ color: "red" }}>Shipped</span>
+                                                    : item.status === "delivered"
+                                                        ? <span style={{ color: "green" }}>Delivered</span>
+                                                        : <span style={{ color: "red" }}>Unknown</span>}
+                                    </div>
 
                                 </div>
-                                <div style={{ width: "100%", background: "black", height: "1px", margin: "5px" }}></div>
-                                <button className="btn btn-primary text-uppercase" style={{ marginLeft: "10px", float: "right" }} onClick={() => handleDelete(item.id)}>Cancel Order</button>
+                                {
+                                    item.status === "pending" ?
+                                        <>
+                                            <div style={{ width: "100%", background: "black", height: "1px", margin: "5px" }}></div>
+                                            <button className="btn btn-primary text-uppercase" style={{ marginLeft: "10px", float: "right" }} onClick={() => handleDelete(item.id)}>Cancel Order</button>
+                                        </> : null
+                                }
 
                             </div>
                         </div>

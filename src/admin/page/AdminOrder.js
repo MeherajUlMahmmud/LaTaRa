@@ -4,6 +4,7 @@ import {
     deleteDoc,
     doc,
     onSnapshot,
+    updateDoc,
 } from "firebase/firestore";
 import { db } from '../../firebase.config';
 import { toast } from 'react-toastify';
@@ -32,11 +33,38 @@ const AdminOrder = () => {
         };
     }, []);
 
-    const handleMarkAsConfirmed = async (id) => { };
+    const handleMarkAsConfirmed = async (id) => {
+        try {
+            await updateDoc(doc(db, "Order", id), {
+                status: "confirmed",
+            });
+            toast.success("Successfully Item Update");
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    const handleMarkAsShipped = async (id) => { };
+    const handleMarkAsShipped = async (id) => {
+        try {
+            await updateDoc(doc(db, "Order", id), {
+                status: "shipped",
+            });
+            toast.success("Successfully Item Update");
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    const handleMarkAsDelivered = async (id) => { };
+    const handleMarkAsDelivered = async (id) => {
+        try {
+            await updateDoc(doc(db, "Order", id), {
+                status: "delivered",
+            });
+            toast.success("Successfully Item Update");
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const handleDelete = async (id) => {
         try {

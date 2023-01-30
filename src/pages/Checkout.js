@@ -73,7 +73,7 @@ const Checkout = () => {
     setCheckout({ ...checkout, [id]: value });
   }
 
-  const modify = { ...checkout, "totalQuantity": totalQty, "subtotal": shipping === '0' ? totalAmount : totalCost, "shipping": shipping ? "Yes" : "No", "Payment": payment, "name": user?.displayName, "Email": user?.email, }
+  const modify = { ...checkout, "totalQuantity": totalQty, "subtotal": shipping === '0' ? totalAmount : totalCost, "shipping": shipping ? "Yes" : "No", "Payment": payment, "name": user?.displayName, "Email": user?.email, "status": "pending" }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

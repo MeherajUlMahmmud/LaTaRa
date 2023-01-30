@@ -77,7 +77,8 @@ const ViewProducts = () => {
                             <th scope="col">Product</th>
                             <th scope="col">Category</th>
                             <th scope="col">Description</th>
-                            <th scope="col">ShortDesc.</th>
+                            {/* <th scope="col">ShortDesc.</th> */}
+                            <th scope="col">Available Quantity</th>
                             <th scope="col">Price</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -90,8 +91,9 @@ const ViewProducts = () => {
                                     <td><div style={{ margin: "5px", display: "inline-block", position: "relative", objectFit: "cover" }}><img src={datas.imgUrl} alt="" height={"10px;"} /></div></td>
                                     <td>{datas.product}</td>
                                     <td>{datas.category}</td>
-                                    <td>{datas.description}</td>
-                                    <td>{datas.shortDesc}</td>
+                                    <td>{datas.description.slice(0, 50) + '...'}</td>
+                                    {/* <td>{datas.shortDesc}</td> */}
+                                    <td><span style={{ color: "green", fontSize: "15px" }}>{datas?.availableQuantity || 0}</span></td>
                                     <td><span style={{ color: "blue", fontSize: "15px" }}>TK {datas.price}</span></td>
 
                                     <td>
@@ -102,11 +104,8 @@ const ViewProducts = () => {
                                         </span>
                                     </td>
                                 </tr>
-
                             )
                         })}
-
-
                     </tbody>
                 </table>
             </div>
