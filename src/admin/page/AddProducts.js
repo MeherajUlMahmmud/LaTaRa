@@ -124,6 +124,7 @@ const AddProducts = () => {
               <FormGroup className="form__group">
                 <input type="number" placeholder="Price"
                   id="price" onChange={handleInput}
+                  min="1"
                   required
                 />
               </FormGroup>
@@ -131,6 +132,7 @@ const AddProducts = () => {
               <FormGroup className="form__group">
                 <input type="number" placeholder="Available Quantity"
                   id="availableQuantity" onChange={handleInput}
+                  min="1"
                   required
                 />
               </FormGroup>
