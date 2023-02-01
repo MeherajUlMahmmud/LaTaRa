@@ -102,29 +102,23 @@ const ProductDetails = () => {
     setReview({ ...review, [id]: value });
   }
 
-  const modify = { ...review, "rating": rating }
+  const modify = { ...review, "rating": rating, "productId": id, "userId": currentUser.displayName }
 
   console.log("Modify Data is : ", modify);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // store user data in firestore database 
-      // await addDoc(collection(db,"products"),{
-      //     ...modify,
-      //     timeStamp: serverTimestamp(),
-      // });
-      const generalRef = collection(db, `products/${currentUser.displayName}/reviews`);
-      const reviews = await addDoc(generalRef, {
+      // store review data in firestore database 
+      await addDoc(collection(db, "reviews"), {
         ...modify,
         timeStamp: serverTimestamp(),
       });
 
       toast.success('Thanks for giving us the review!');
-      navigate(`{/shop/${id}}`);
+      navigate(`/shop/${id}`);
     }
     catch (error) {
-
       toast.error("Something is Wrong ", { error });
     }
   }
