@@ -160,11 +160,11 @@ const ProductDetails = () => {
                     <h2>{item.product}</h2>
                     <div className='product__rating d-flex align-items-center gap-5 mb-3'>
                       <div>
-                        <span><i class="ri-star-s-fill"></i></span>
-                        <span><i class="ri-star-s-fill"></i></span>
-                        <span><i class="ri-star-s-fill"></i></span>
-                        <span><i class="ri-star-s-fill"></i></span>
-                        <span><i class="ri-star-half-s-line"></i></span>
+                        <span><i className="ri-star-s-fill"></i></span>
+                        <span><i className="ri-star-s-fill"></i></span>
+                        <span><i className="ri-star-s-fill"></i></span>
+                        <span><i className="ri-star-s-fill"></i></span>
+                        <span><i className="ri-star-half-s-line"></i></span>
                       </div>&nbsp;
                       <p>(<span>{item.avgRating}</span> &nbsp;ratings)</p>
                     </div>
@@ -224,12 +224,12 @@ const ProductDetails = () => {
                               </div>
                               <div className="form__group d-flex align-items-center ">
                                 <motion.span whileTap={{ scale: 1.3 }}>
-                                  <input type="radio" id="1" onChange={(e) => { setRating(e.target.id) }} />1<i class="ri-star-s-fill"></i>
+                                  <input type="radio" id="1" onChange={(e) => { setRating(e.target.id) }} />1<i className="ri-star-s-fill"></i>
                                 </motion.span>&nbsp;&nbsp;
-                                <motion.span whileTap={{ scale: 1.3 }}><input type="radio" id="2" onChange={(e) => { setRating(e.target.id) }} />2<i class="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
-                                <motion.span whileTap={{ scale: 1.3 }}><input type="radio" id="3" onChange={(e) => { setRating(e.target.id) }} />3<i class="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
-                                <motion.span whileTap={{ scale: 1.3 }}><input type="radio" id="4" onChange={(e) => { setRating(e.target.id) }} />4<i class="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
-                                <motion.span whileTap={{ scale: 1.3 }}> <input type="radio" id="5" onChange={(e) => { setRating(e.target.id) }} />5<i class="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
+                                <motion.span whileTap={{ scale: 1.3 }}><input type="radio" id="2" onChange={(e) => { setRating(e.target.id) }} />2<i className="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
+                                <motion.span whileTap={{ scale: 1.3 }}><input type="radio" id="3" onChange={(e) => { setRating(e.target.id) }} />3<i className="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
+                                <motion.span whileTap={{ scale: 1.3 }}><input type="radio" id="4" onChange={(e) => { setRating(e.target.id) }} />4<i className="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
+                                <motion.span whileTap={{ scale: 1.3 }}> <input type="radio" id="5" onChange={(e) => { setRating(e.target.id) }} />5<i className="ri-star-s-fill"></i></motion.span>&nbsp;&nbsp;
                               </div>
                               <div className='form__group'>
                                 <textarea id="message"
