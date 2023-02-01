@@ -13,6 +13,8 @@ import './common.css';
 
 const AdminOrder = () => {
     const [data, setData] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
 
     useEffect(() => {
         const unsub = onSnapshot(
@@ -35,9 +37,10 @@ const AdminOrder = () => {
 
     const handleMarkAsConfirmed = async (id) => {
         try {
-            await updateDoc(doc(db, "Order", id), {
-                status: "confirmed",
-            });
+            // await updateDoc(doc(db, "Order", id), {
+            //     status: "confirmed",
+            // });
+
             toast.success("Successfully Item Update");
         } catch (err) {
             console.log(err);
@@ -68,20 +71,29 @@ const AdminOrder = () => {
 
     const handleDelete = async (id) => {
         try {
-            await deleteDoc(doc(db, "Order", id));
-            setData(data.filter((item) => item.id !== id));
+            // await deleteDoc(doc(db, "Order", id));
+            // setData(data.filter((item) => item.id !== id));
             toast.success("Successfully Item Delete");
         } catch (err) {
             console.log(err);
         }
     };
 
+    const handleClose = () => {
+        setIsModalOpen(false);
+    };
+
     return (
-        <div>
-            <div style={{ height: "100px" }}>
-                <AdminHeader category="Page" title="Order" />
-            </div>
-            <div>
+        <>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                position: "relative",
+            }}>
+                <div style={{ height: "100px" }}>
+                    <AdminHeader category="Page" title="Order" />
+                </div>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
@@ -100,55 +112,55 @@ const AdminOrder = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data?.map((datas, index) => {
+                        {data?.map((orderItem, index) => {
                             return (
-                                <tr>
+                                <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{
-                                        datas.Email.length > 15
-                                            ? <><span>{datas.Email.slice(0, 15)}</span><br /> <span>{datas.Email.slice(15)}</span></>
-                                            : datas.Email
+                                        orderItem.Email.length > 15
+                                            ? <><span>{orderItem.Email.slice(0, 15)}</span><br /> <span>{orderItem.Email.slice(15)}</span></>
+                                            : orderItem.Email
                                     }</td>
                                     <td>{
-                                        datas.name.length > 15
-                                            ? <><span>{datas.name.slice(0, 15)}</span><br /> <span>{datas.name.slice(15)}</span></>
-                                            : datas.name
+                                        orderItem.name.length > 15
+                                            ? <><span>{orderItem.name.slice(0, 15)}</span><br /> <span>{orderItem.name.slice(15)}</span></>
+                                            : orderItem.name
                                     }</td>
-                                    <td>{datas.phone}</td>
+                                    <td>{orderItem.phone}</td>
                                     <td>
                                         Address: {
-                                            datas.address.length > 15
-                                                ? <><span>{datas.address.slice(0, 15)}</span><br /> <span>{datas.address.slice(15)}</span></>
-                                                : datas.address
+                                            orderItem.address.length > 15
+                                                ? <><span>{orderItem.address.slice(0, 15)}</span><br /> <span>{orderItem.address.slice(15)}</span></>
+                                                : orderItem.address
                                         }
                                         <br />
                                         City: {
-                                            datas.city.length > 15
-                                                ? <><span>{datas.city.slice(0, 15)}</span><br /> <span>{datas.city.slice(15)}</span></>
-                                                : datas.city
+                                            orderItem.city.length > 15
+                                                ? <><span>{orderItem.city.slice(0, 15)}</span><br /> <span>{orderItem.city.slice(15)}</span></>
+                                                : orderItem.city
                                         }
                                         <br />
                                         Postal Code: {
-                                            datas.postal.length > 15
-                                                ? <><span>{datas.postal.slice(0, 15)}</span><br /> <span>{datas.postal.slice(15)}</span></>
-                                                : datas.postal
+                                            orderItem.postal.length > 15
+                                                ? <><span>{orderItem.postal.slice(0, 15)}</span><br /> <span>{orderItem.postal.slice(15)}</span></>
+                                                : orderItem.postal
                                         }
                                     </td>
-                                    <td>{datas.shipping}</td>
-                                    <td style={{ color: "#ed02c6", fontSize: "14px" }}>{datas.subtotal} TK</td>
-                                    <td>{datas.totalQuantity}</td>
-                                    <td>{datas.Payment ? datas.Payment : "N/P"}</td>
-                                    <td>{datas.Payment === "Cash"
+                                    <td>{orderItem.shipping}</td>
+                                    <td style={{ color: "#ed02c6", fontSize: "14px" }}>{orderItem.subtotal} TK</td>
+                                    <td>{orderItem.totalQuantity}</td>
+                                    <td>{orderItem.Payment ? orderItem.Payment : "N/P"}</td>
+                                    <td>{orderItem.Payment === "Cash"
                                         ? <span>N/A</span>
-                                        : <span>{datas.transactionId}</span>}
+                                        : <span>{orderItem.transactionId}</span>}
                                     </td>
-                                    <td>{datas.status === "pending" ?
+                                    <td>{orderItem.status === "pending" ?
                                         <span style={{ color: "blue" }}>Pending</span>
-                                        : datas.status === "confirmed"
+                                        : orderItem.status === "confirmed"
                                             ? <span style={{ color: "green" }}>Confirmed</span>
-                                            : datas.status === "shipped"
+                                            : orderItem.status === "shipped"
                                                 ? <span style={{ color: "red" }}>Shipped</span>
-                                                : datas.status === "delivered"
+                                                : orderItem.status === "delivered"
                                                     ? <span style={{ color: "green" }}>Delivered</span>
                                                     : <span style={{ color: "red" }}>Unknown</span>}
                                     </td>
@@ -156,30 +168,152 @@ const AdminOrder = () => {
                                         display: "flex",
                                         flexDirection: "column",
                                     }}>
-                                        {datas.status === "pending" ?
+                                        {orderItem.status === "pending" ?
                                             <span className='ico_delete mb-2'>
-                                                <button type="button" className="btn btn-info" onClick={() => handleMarkAsConfirmed(datas.id)}>Mark as Confirmed</button>
+                                                <button type="button" className="btn btn-info" onClick={() => handleMarkAsConfirmed(orderItem.id)}>Mark as Confirmed</button>
                                             </span>
-                                            : datas.status === "confirmed"
+                                            : orderItem.status === "confirmed"
                                                 ? <span className='ico_delete mb-2'>
-                                                    <button type="button" className="btn btn-secondary" onClick={() => handleMarkAsShipped(datas.id)}>Mark as Shipped</button>
+                                                    <button type="button" className="btn btn-secondary" onClick={() => handleMarkAsShipped(orderItem.id)}>Mark as Shipped</button>
                                                 </span>
-                                                : datas.status === "shipped"
+                                                : orderItem.status === "shipped"
                                                     ? <span className='ico_delete mb-2'>
-                                                        <button type="button" className="btn btn-success" onClick={() => handleMarkAsDelivered(datas.id)}>Mark as Delivered</button>
+                                                        <button type="button" className="btn btn-success" onClick={() => handleMarkAsDelivered(orderItem.id)}>Mark as Delivered</button>
                                                     </span>
                                                     : null}
 
-                                        <span className='ico_delete'><button type="button" className="btn btn-danger" onClick={() => handleDelete(datas.id)}>Delete</button></span>
+                                        <span className='ico_delete mb-2'>
+                                            <button type="button" className="btn btn-primary" onClick={() => {
+                                                setIsModalOpen(true);
+                                                setSelectedOrder(orderItem)
+                                            }}>View Details</button>
+                                        </span>
+                                        <span className='ico_delete'>
+                                            <button type="button" className="btn btn-danger" onClick={() => handleDelete(orderItem.id)}>Delete</button>
+                                        </span>
                                     </td>
                                 </tr>
                             )
                         })}
                     </tbody>
                 </table>
+                {
+                    isModalOpen && <OrderDetailModel handleClose={handleClose} data={selectedOrder} />
+                }
+            </div>
+        </>
+    )
+}
+
+const OrderDetailModel = ({ handleClose, data }) => {
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                data.products.map((product) => {
+                    const documentId = product.productId;
+                })
+            } catch (error) {
+                setError(error);
+            }
+            // setLoading(false);
+        }
+        fetchProducts();
+    }, []);
+
+    return (
+        <div style={{
+            position: "fixed",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0,0,0,0.5)",
+        }}>
+            <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "white",
+                width: "70%",
+                // height: "80%",
+                padding: "20px",
+                overflow: "auto",
+            }}>
+
+                <div>
+                    <h2>Order Details</h2>
+                </div>
+                <div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h5><span style={{ fontWeight: "bold" }}>Order ID: </span>{data.id}</h5>
+                            <h5><span style={{ fontWeight: "bold" }}>Order Status: </span>{data.status}</h5>
+
+                            <h5><span style={{ fontWeight: "bold" }}>Shipping: </span>{data.shipping}</h5>
+                            <h5><span style={{ fontWeight: "bold" }}>Payment: </span>{data.Payment}</h5>
+                            <h5><span style={{ fontWeight: "bold" }}>Transaction ID: </span>{data.transactionId ? data.transactionId : "N/A"}</h5>
+                        </div>
+                        <div className="col-md-6">
+                            <h5><span style={{ fontWeight: "bold" }}>Customer Name: </span>{data.name}</h5>
+                            <h5><span style={{ fontWeight: "bold" }}>Customer Email: </span>{data.Email}</h5>
+                            <h5><span style={{ fontWeight: "bold" }}>Customer Phone: </span>{data.phone}</h5>
+                            <h5><span style={{ fontWeight: "bold" }}>Customer Address: </span>{data.address}</h5>
+
+                            <h5><span style={{ fontWeight: "bold" }}>Customer City: </span>{data.city}</h5>
+                            <h5><span style={{ fontWeight: "bold" }}>Customer Postal Code: </span>{data.postal}</h5>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <h5>Order Items</h5>
+                            <table className="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Product Price</th>
+                                        <th>Product Quantity</th>
+                                        <th>Product Total</th>
+                                    </tr>
+                                </thead>
+                                {
+                                    loading ? <div className="text-center">
+                                        <div className="spinner-border text-primary" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </div>
+                                    </div> : error ? <div className="text-center">
+                                        <h3 className='text-danger'>{error}</h3>
+                                    </div> :
+                                        <tbody>
+                                            {products.map((item, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{item.name}</td>
+                                                        <td>{item.price} TK</td>
+                                                        <td>{item.quantity}</td>
+                                                        <td>{parseFloat(item.price) * parseInt(item.quantity)} TK</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <button className="btn btn-secondary" onClick={handleClose}>
+                    Close
+                </button>
             </div>
         </div>
     )
 }
+
+
 
 export default AdminOrder
