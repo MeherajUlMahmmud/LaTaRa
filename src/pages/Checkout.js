@@ -20,6 +20,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const Checkout = () => {
 
+  const cartItems = useSelector(state => state.cart.cartItems)
   const [shipping, setShipping] = useState('0');
   const [payment, setPayment] = useState('');
   const totalQty = useSelector(state => state.cart.totalQuantity);
@@ -38,15 +39,11 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const removeItem = () => {
     dispatch(cartActions.removeAllItem())
-    console.log("Clear Cart ")
   }
-
-  console.log("Payment is : ", payment);
 
   const ValidatePayment = (e) => {
     const pmt = e.target.value;
 
-    console.log("Clicked")
     let checkboxes = document.getElementsByName("payment");
     let numberOfCheckedItems = 0;
     for (let i = 0; i < checkboxes.length; i++) {
@@ -73,26 +70,34 @@ const Checkout = () => {
     setCheckout({ ...checkout, [id]: value });
   }
 
-  const modify = { ...checkout, "totalQuantity": totalQty, "subtotal": shipping === '0' ? totalAmount : totalCost, "shipping": shipping ? "Yes" : "No", "Payment": payment, "name": user?.displayName, "Email": user?.email, "status": "pending" }
+  const modify = {
+    ...checkout,
+    "totalQuantity": totalQty,
+    "subtotal": shipping === '0' ? totalAmount : totalCost, "shipping": shipping ? "Yes" : "No",
+    "Payment": payment,
+    "name": user?.displayName,
+    "Email": user?.email,
+    "status": "pending",
+    "products": cartItems.map((item) => {
+      return {
+        "productId": item.id,
+        "quantity": item.quantity,
+      }
+    })
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // store user data in firestore database 
       await addDoc(collection(db, "Order"), {
         ...modify,
         timeStamp: serverTimestamp(),
       });
-      // await setDoc(doc(db,"Order",user.email),{
-      //   ...modify,
-      //   timeStamp: serverTimestamp(),
 
-      // });
       toast.success('Order placed successfully!');
       navigate('/');
     }
     catch (error) {
-
       toast.error("Something was Wrong ", { error });
     }
     finally {
