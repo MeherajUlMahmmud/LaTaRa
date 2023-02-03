@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
     collection,
     deleteDoc,
@@ -6,10 +6,10 @@ import {
     onSnapshot,
     updateDoc,
 } from "firebase/firestore";
-import { db } from '../../firebase.config';
-import { toast } from 'react-toastify';
-import AdminHeader from '../components/Header/AHeader'
-import './common.css';
+import { db } from "../../firebase.config";
+import { toast } from "react-toastify";
+import AdminHeader from "../components/Header/AHeader";
+import "./common.css";
 
 const AdminOrder = () => {
     const [data, setData] = useState([]);
@@ -85,12 +85,14 @@ const AdminOrder = () => {
 
     return (
         <>
-            <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                position: "relative",
-            }}>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    position: "relative",
+                }}
+            >
                 <div style={{ height: "100px" }}>
                     <AdminHeader category="Page" title="Order" />
                 </div>
@@ -116,97 +118,239 @@ const AdminOrder = () => {
                             return (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{
-                                        orderItem.Email.length > 15
-                                            ? <><span>{orderItem.Email.slice(0, 15)}</span><br /> <span>{orderItem.Email.slice(15)}</span></>
-                                            : orderItem.Email
-                                    }</td>
-                                    <td>{
-                                        orderItem.name.length > 15
-                                            ? <><span>{orderItem.name.slice(0, 15)}</span><br /> <span>{orderItem.name.slice(15)}</span></>
-                                            : orderItem.name
-                                    }</td>
+                                    <td>
+                                        {orderItem.Email.length > 15 ? (
+                                            <>
+                                                <span>
+                                                    {orderItem.Email.slice(
+                                                        0,
+                                                        15
+                                                    )}
+                                                </span>
+                                                <br />{" "}
+                                                <span>
+                                                    {orderItem.Email.slice(15)}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            orderItem.Email
+                                        )}
+                                    </td>
+                                    <td>
+                                        {orderItem.name.length > 15 ? (
+                                            <>
+                                                <span>
+                                                    {orderItem.name.slice(
+                                                        0,
+                                                        15
+                                                    )}
+                                                </span>
+                                                <br />{" "}
+                                                <span>
+                                                    {orderItem.name.slice(15)}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            orderItem.name
+                                        )}
+                                    </td>
                                     <td>{orderItem.phone}</td>
                                     <td>
-                                        Address: {
-                                            orderItem.address.length > 15
-                                                ? <><span>{orderItem.address.slice(0, 15)}</span><br /> <span>{orderItem.address.slice(15)}</span></>
-                                                : orderItem.address
-                                        }
+                                        Address:{" "}
+                                        {orderItem.address.length > 15 ? (
+                                            <>
+                                                <span>
+                                                    {orderItem.address.slice(
+                                                        0,
+                                                        15
+                                                    )}
+                                                </span>
+                                                <br />{" "}
+                                                <span>
+                                                    {orderItem.address.slice(
+                                                        15
+                                                    )}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            orderItem.address
+                                        )}
                                         <br />
-                                        City: {
-                                            orderItem.city.length > 15
-                                                ? <><span>{orderItem.city.slice(0, 15)}</span><br /> <span>{orderItem.city.slice(15)}</span></>
-                                                : orderItem.city
-                                        }
+                                        City:{" "}
+                                        {orderItem.city.length > 15 ? (
+                                            <>
+                                                <span>
+                                                    {orderItem.city.slice(
+                                                        0,
+                                                        15
+                                                    )}
+                                                </span>
+                                                <br />{" "}
+                                                <span>
+                                                    {orderItem.city.slice(15)}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            orderItem.city
+                                        )}
                                         <br />
-                                        Postal Code: {
-                                            orderItem.postal.length > 15
-                                                ? <><span>{orderItem.postal.slice(0, 15)}</span><br /> <span>{orderItem.postal.slice(15)}</span></>
-                                                : orderItem.postal
-                                        }
+                                        Postal Code:{" "}
+                                        {orderItem.postal.length > 15 ? (
+                                            <>
+                                                <span>
+                                                    {orderItem.postal.slice(
+                                                        0,
+                                                        15
+                                                    )}
+                                                </span>
+                                                <br />{" "}
+                                                <span>
+                                                    {orderItem.postal.slice(15)}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            orderItem.postal
+                                        )}
                                     </td>
                                     <td>{orderItem.shipping}</td>
-                                    <td style={{ color: "#ed02c6", fontSize: "14px" }}>{orderItem.subtotal} TK</td>
+                                    <td
+                                        style={{
+                                            color: "#ed02c6",
+                                            fontSize: "14px",
+                                        }}
+                                    >
+                                        {orderItem.subtotal} TK
+                                    </td>
                                     <td>{orderItem.totalQuantity}</td>
-                                    <td>{orderItem.Payment ? orderItem.Payment : "N/P"}</td>
-                                    <td>{orderItem.Payment === "Cash"
-                                        ? <span>N/A</span>
-                                        : <span>{orderItem.transactionId}</span>}
+                                    <td>
+                                        {orderItem.Payment
+                                            ? orderItem.Payment
+                                            : "N/P"}
                                     </td>
-                                    <td>{orderItem.status === "pending" ?
-                                        <span style={{ color: "blue" }}>Pending</span>
-                                        : orderItem.status === "confirmed"
-                                            ? <span style={{ color: "green" }}>Confirmed</span>
-                                            : orderItem.status === "shipped"
-                                                ? <span style={{ color: "red" }}>Shipped</span>
-                                                : orderItem.status === "delivered"
-                                                    ? <span style={{ color: "green" }}>Delivered</span>
-                                                    : <span style={{ color: "red" }}>Unknown</span>}
-                                    </td>
-                                    <td style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                    }}>
-                                        {orderItem.status === "pending" ?
-                                            <span className='ico_delete mb-2'>
-                                                <button type="button" className="btn btn-info" onClick={() => handleMarkAsConfirmed(orderItem.id)}>Mark as Confirmed</button>
+                                    <td>
+                                        {orderItem.Payment === "Cash" ? (
+                                            <span>N/A</span>
+                                        ) : (
+                                            <span>
+                                                {orderItem.transactionId}
                                             </span>
-                                            : orderItem.status === "confirmed"
-                                                ? <span className='ico_delete mb-2'>
-                                                    <button type="button" className="btn btn-secondary" onClick={() => handleMarkAsShipped(orderItem.id)}>Mark as Shipped</button>
-                                                </span>
-                                                : orderItem.status === "shipped"
-                                                    ? <span className='ico_delete mb-2'>
-                                                        <button type="button" className="btn btn-success" onClick={() => handleMarkAsDelivered(orderItem.id)}>Mark as Delivered</button>
-                                                    </span>
-                                                    : null}
+                                        )}
+                                    </td>
+                                    <td>
+                                        {orderItem.status === "pending" ? (
+                                            <span style={{ color: "blue" }}>
+                                                Pending
+                                            </span>
+                                        ) : orderItem.status === "confirmed" ? (
+                                            <span style={{ color: "green" }}>
+                                                Confirmed
+                                            </span>
+                                        ) : orderItem.status === "shipped" ? (
+                                            <span style={{ color: "red" }}>
+                                                Shipped
+                                            </span>
+                                        ) : orderItem.status === "delivered" ? (
+                                            <span style={{ color: "green" }}>
+                                                Delivered
+                                            </span>
+                                        ) : (
+                                            <span style={{ color: "red" }}>
+                                                Unknown
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                        }}
+                                    >
+                                        {orderItem.status === "pending" ? (
+                                            <span className="ico_delete mb-2">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-info"
+                                                    onClick={() =>
+                                                        handleMarkAsConfirmed(
+                                                            orderItem.id
+                                                        )
+                                                    }
+                                                >
+                                                    Mark as Confirmed
+                                                </button>
+                                            </span>
+                                        ) : orderItem.status === "confirmed" ? (
+                                            <span className="ico_delete mb-2">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-secondary"
+                                                    onClick={() =>
+                                                        handleMarkAsShipped(
+                                                            orderItem.id
+                                                        )
+                                                    }
+                                                >
+                                                    Mark as Shipped
+                                                </button>
+                                            </span>
+                                        ) : orderItem.status === "shipped" ? (
+                                            <span className="ico_delete mb-2">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-success"
+                                                    onClick={() =>
+                                                        handleMarkAsDelivered(
+                                                            orderItem.id
+                                                        )
+                                                    }
+                                                >
+                                                    Mark as Delivered
+                                                </button>
+                                            </span>
+                                        ) : null}
 
-                                        <span className='ico_delete mb-2'>
-                                            <button type="button" className="btn btn-primary" onClick={() => {
-                                                setIsModalOpen(true);
-                                                setSelectedOrder(orderItem)
-                                            }}>View Details</button>
+                                        <span className="ico_delete mb-2">
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary"
+                                                onClick={() => {
+                                                    setIsModalOpen(true);
+                                                    setSelectedOrder(orderItem);
+                                                }}
+                                            >
+                                                View Details
+                                            </button>
                                         </span>
-                                        <span className='ico_delete'>
-                                            <button type="button" className="btn btn-danger" onClick={() => handleDelete(orderItem.id)}>Delete</button>
+                                        <span className="ico_delete">
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger"
+                                                onClick={() =>
+                                                    handleDelete(orderItem.id)
+                                                }
+                                            >
+                                                Delete
+                                            </button>
                                         </span>
                                     </td>
                                 </tr>
-                            )
+                            );
                         })}
                     </tbody>
                 </table>
-                {
-                    isModalOpen && <OrderDetailModel handleClose={handleClose} data={selectedOrder} />
-                }
+                {isModalOpen && (
+                    <OrderDetailModel
+                        handleClose={handleClose}
+                        data={selectedOrder}
+                    />
+                )}
             </div>
         </>
-    )
-}
+    );
+};
 
 const OrderDetailModel = ({ handleClose, data }) => {
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -215,57 +359,117 @@ const OrderDetailModel = ({ handleClose, data }) => {
             try {
                 data.products.map((product) => {
                     const documentId = product.productId;
-                })
+                });
             } catch (error) {
                 setError(error);
             }
             // setLoading(false);
-        }
+        };
         fetchProducts();
     }, []);
 
     return (
-        <div style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0,0,0,0.5)",
-        }}>
-            <div style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                backgroundColor: "white",
-                width: "70%",
-                // height: "80%",
-                padding: "20px",
-                overflow: "auto",
-            }}>
-
+        <div
+            style={{
+                position: "fixed",
+                top: "0",
+                left: "0",
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0,0,0,0.5)",
+            }}
+        >
+            <div
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "white",
+                    width: "70%",
+                    // height: "80%",
+                    padding: "20px",
+                    overflow: "auto",
+                }}
+            >
                 <div>
                     <h2>Order Details</h2>
                 </div>
                 <div>
                     <div className="row">
                         <div className="col-md-6">
-                            <h5><span style={{ fontWeight: "bold" }}>Order ID: </span>{data.id}</h5>
-                            <h5><span style={{ fontWeight: "bold" }}>Order Status: </span>{data.status}</h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Order ID:{" "}
+                                </span>
+                                {data.id}
+                            </h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Order Status:{" "}
+                                </span>
+                                {data.status}
+                            </h5>
 
-                            <h5><span style={{ fontWeight: "bold" }}>Shipping: </span>{data.shipping}</h5>
-                            <h5><span style={{ fontWeight: "bold" }}>Payment: </span>{data.Payment}</h5>
-                            <h5><span style={{ fontWeight: "bold" }}>Transaction ID: </span>{data.transactionId ? data.transactionId : "N/A"}</h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Shipping:{" "}
+                                </span>
+                                {data.shipping}
+                            </h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Payment:{" "}
+                                </span>
+                                {data.Payment}
+                            </h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Transaction ID:{" "}
+                                </span>
+                                {data.transactionId
+                                    ? data.transactionId
+                                    : "N/A"}
+                            </h5>
                         </div>
                         <div className="col-md-6">
-                            <h5><span style={{ fontWeight: "bold" }}>Customer Name: </span>{data.name}</h5>
-                            <h5><span style={{ fontWeight: "bold" }}>Customer Email: </span>{data.Email}</h5>
-                            <h5><span style={{ fontWeight: "bold" }}>Customer Phone: </span>{data.phone}</h5>
-                            <h5><span style={{ fontWeight: "bold" }}>Customer Address: </span>{data.address}</h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Customer Name:{" "}
+                                </span>
+                                {data.name}
+                            </h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Customer Email:{" "}
+                                </span>
+                                {data.Email}
+                            </h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Customer Phone:{" "}
+                                </span>
+                                {data.phone}
+                            </h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Customer Address:{" "}
+                                </span>
+                                {data.address}
+                            </h5>
 
-                            <h5><span style={{ fontWeight: "bold" }}>Customer City: </span>{data.city}</h5>
-                            <h5><span style={{ fontWeight: "bold" }}>Customer Postal Code: </span>{data.postal}</h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Customer City:{" "}
+                                </span>
+                                {data.city}
+                            </h5>
+                            <h5>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Customer Postal Code:{" "}
+                                </span>
+                                {data.postal}
+                            </h5>
                         </div>
                     </div>
                     <div className="row">
@@ -280,27 +484,43 @@ const OrderDetailModel = ({ handleClose, data }) => {
                                         <th>Product Total</th>
                                     </tr>
                                 </thead>
-                                {
-                                    loading ? <div className="text-center">
-                                        <div className="spinner-border text-primary" role="status">
-                                            <span className="sr-only">Loading...</span>
+                                {loading ? (
+                                    <div className="text-center">
+                                        <div
+                                            className="spinner-border text-primary"
+                                            role="status"
+                                        >
+                                            <span className="sr-only">
+                                                Loading...
+                                            </span>
                                         </div>
-                                    </div> : error ? <div className="text-center">
-                                        <h3 className='text-danger'>{error}</h3>
-                                    </div> :
-                                        <tbody>
-                                            {products.map((item, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.price} TK</td>
-                                                        <td>{item.quantity}</td>
-                                                        <td>{parseFloat(item.price) * parseInt(item.quantity)} TK</td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                }
+                                    </div>
+                                ) : error ? (
+                                    <div className="text-center">
+                                        <h3 className="text-danger">{error}</h3>
+                                    </div>
+                                ) : (
+                                    <tbody>
+                                        {products.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{item.name}</td>
+                                                    <td>{item.price} TK</td>
+                                                    <td>{item.quantity}</td>
+                                                    <td>
+                                                        {parseFloat(
+                                                            item.price
+                                                        ) *
+                                                            parseInt(
+                                                                item.quantity
+                                                            )}{" "}
+                                                        TK
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                )}
                             </table>
                         </div>
                     </div>
@@ -311,9 +531,7 @@ const OrderDetailModel = ({ handleClose, data }) => {
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-
-
-export default AdminOrder
+export default AdminOrder;
