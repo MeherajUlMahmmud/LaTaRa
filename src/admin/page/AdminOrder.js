@@ -3,6 +3,7 @@ import {
     collection,
     deleteDoc,
     doc,
+    getDoc,
     onSnapshot,
     updateDoc,
 } from "firebase/firestore";
@@ -37,11 +38,28 @@ const AdminOrder = () => {
 
     const handleMarkAsConfirmed = async (id) => {
         try {
-            // await updateDoc(doc(db, "Order", id), {
-            //     status: "confirmed",
-            // });
+            const orderData = await getDoc(doc(db, "Order", id));
+            const orderDataObj = orderData.data();
+            // console.log(orderDataObj.products);
 
+            //loop through the products and update availableQuantity
+            orderDataObj.products.forEach(async (product) => {
+                const productData = await getDoc(
+                    doc(db, "products", product.productId)
+                );
+                const productDataObj = productData.data();
+                await updateDoc(doc(db, "products", product.productId), {
+                    availableQuantity:
+                        productDataObj.availableQuantity - product.quantity,
+                });
+            });
+
+            await updateDoc(doc(db, "Order", id), {
+                status: "confirmed",
+            });
             toast.success("Successfully Item Update");
+
+            // toast.success("Successfully Item Update");
         } catch (err) {
             console.log(err);
         }
@@ -351,7 +369,7 @@ const AdminOrder = () => {
 
 const OrderDetailModel = ({ handleClose, data }) => {
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -359,7 +377,12 @@ const OrderDetailModel = ({ handleClose, data }) => {
             try {
                 data.products.map((product) => {
                     const documentId = product.productId;
+                    //set products to empty array
+                    setProducts([]);
+
+                    getProductsFromId(product.productId, product.quantity);
                 });
+                console.log(data.products);
             } catch (error) {
                 setError(error);
             }
@@ -367,6 +390,37 @@ const OrderDetailModel = ({ handleClose, data }) => {
         };
         fetchProducts();
     }, []);
+
+    // useEffect(() => {
+    //     const unsub = onSnapshot(
+    //         collection(db, "Order"),
+    //         (snapShot) => {
+    //             let list = [];
+    //             snapShot.docs.forEach((doc) => {
+    //                 list.push({ id: doc.id, ...doc.data() });
+    //             });
+    //             setData(list);
+    //         },
+    //         (error) => {
+    //             console.log(error);
+    //         }
+    //     );
+    //     return () => {
+    //         unsub();
+    //     };
+    // }, []);
+    const getProductsFromId = async (id, quantity) => {
+        const docRef = doc(db, "products", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const data = { ...docSnap.data(), quantity: quantity };
+            console.log("Document data:", data);
+            setProducts((prev) => [...prev, data]);
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    };
 
     return (
         <div
@@ -504,7 +558,7 @@ const OrderDetailModel = ({ handleClose, data }) => {
                                         {products.map((item, index) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td>{item.name}</td>
+                                                    <td>{item.product}</td>
                                                     <td>{item.price} TK</td>
                                                     <td>{item.quantity}</td>
                                                     <td>
