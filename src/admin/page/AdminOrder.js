@@ -89,8 +89,8 @@ const AdminOrder = () => {
 
     const handleDelete = async (id) => {
         try {
-            // await deleteDoc(doc(db, "Order", id));
-            // setData(data.filter((item) => item.id !== id));
+            await deleteDoc(doc(db, "Order", id));
+            setData(data.filter((item) => item.id !== id));
             toast.success("Successfully Item Delete");
         } catch (err) {
             console.log(err);
