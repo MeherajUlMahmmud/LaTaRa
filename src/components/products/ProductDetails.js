@@ -241,13 +241,27 @@ const ProductDetails = () => {
                                         </span>
                                     </div>
                                     <p className="mt-3">{item.shortDesc}</p>
-                                    {item.category !== "upcoming" && (
+                                    {item.category === "upcoming" ? (
+                                        <motion.button
+                                            whileTap={{ scale: 1.2 }}
+                                            className="buy__btn"
+                                        >
+                                            Coming Soon
+                                        </motion.button>
+                                    ) : item.availableQuantity > 0 ? (
                                         <motion.button
                                             whileTap={{ scale: 1.2 }}
                                             className="buy__btn"
                                             onClick={addToCart}
                                         >
                                             Add To Cart
+                                        </motion.button>
+                                    ) : (
+                                        <motion.button
+                                            whileTap={{ scale: 1.2 }}
+                                            className="buy__btn"
+                                        >
+                                            Out Of Stock
                                         </motion.button>
                                     )}
                                 </Col>
