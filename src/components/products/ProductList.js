@@ -9,12 +9,8 @@ const ProductList = ({ data }) => {
           return (
             <ProductCard item={value} key={index} />
           )
-
         })
-
-
       }
-
     </>
   )
 }

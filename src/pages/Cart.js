@@ -42,13 +42,10 @@ const Cart = () => {
                         <Tr item={item} key={index} />
                       ))
                     }
-
                   </tbody>
                 </table>
                 )
-
             }
-
           </Col>
           <Col lg="3">
             <div>
@@ -81,20 +78,19 @@ const Cart = () => {
 const Tr = ({ item }) => {
   const dispatch = useDispatch();
   const Increments = () => {
-    if (item.quantity > 49) {
-      toast.success("You Cannot increment more than 50 products, Please Contact Us for customize order!");
-    }
-    else {
-
+    if (item.quantity + 1 > item.availableQuantity) {
+      toast.warning("You Cannot increment more than available quantity");
+    } else {
       dispatch(cartActions.addItem({
         id: item.id,
         productName: item.product,
         price: item.price,
         imgUrl: item.imgUrl,
+        availableQuantity: item.availableQuantity
       }))
     }
-
   };
+
   const decrement = () => {
     if (item.quantity === 0) {
       toast.warning("Your Item is Empty, Please Increment Your Item");

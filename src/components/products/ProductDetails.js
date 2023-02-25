@@ -261,21 +261,19 @@ const ProductDetails = () => {
                                 <Col lg="12">
                                     <div className="tab__wrapper d-flex align-items-center gap-5 .px-2">
                                         <h6
-                                            className={`${
-                                                tab === "desc"
-                                                    ? "active__tab"
-                                                    : ""
-                                            }`}
+                                            className={`${tab === "desc"
+                                                ? "active__tab"
+                                                : ""
+                                                }`}
                                             onClick={() => setTab("desc")}
                                         >
                                             Description
                                         </h6>
                                         <h6
-                                            className={`${
-                                                tab === "rev"
-                                                    ? "active__tab"
-                                                    : ""
-                                            }`}
+                                            className={`${tab === "rev"
+                                                ? "active__tab"
+                                                : ""
+                                                }`}
                                             onClick={() => setTab("rev")}
                                         >
                                             Reviews ({reviews})

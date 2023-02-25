@@ -13,10 +13,10 @@ const ProductCard = ({ item }) => {
     const addToCart = () => {
         dispatch(cartActions.addItem({
             id: item.id,
-            productName: item.product,
+            productName: item.productName,
             price: item.price,
             imgUrl: item.imgUrl,
-
+            availableQuantity: item.availableQuantity,
         }));
         toast.success('Product added to Cart')
     };
@@ -37,11 +37,14 @@ const ProductCard = ({ item }) => {
                 </Link>
                 <div className='product__card-bottom d-flex align-items-center justify-content-between p-2'>
                     <span className='price'>Tk {item.price} </span>
-                    {
-                        item.category !== "upcoming" && (
-                            <motion.span whileTap={{ scale: 1.2 }} className='cart' onClick={addToCart}>Add To Cart</motion.span>)}
+                    {item.category === "upcoming" ? (
+                        <motion.span whileTap={{ scale: 1.2 }} className='out-of-stock'>Coming Soon</motion.span>
+                    ) : item.availableQuantity > 0 ? (
+                        <motion.span whileTap={{ scale: 1.2 }} className='cart' onClick={addToCart}>Add To Cart</motion.span>
+                    ) : (
+                        <motion.span whileTap={{ scale: 1.2 }} className='out-of-stock'>Out of Stock</motion.span>
+                    )}
                 </div>
-
             </div>
         </Col>
     )

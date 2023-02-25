@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 
 const ViewProducts = () => {
     const [data, setData] = useState([]);
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     const navigatetoAdd = () => {
         navigate('addproducts');
@@ -37,10 +37,8 @@ const ViewProducts = () => {
         return () => {
             unsub();
         };
-
-
     }, []);
-    console.log(data);
+
     const handleDelete = async (id) => {
         try {
             await deleteDoc(doc(db, "products", id));
@@ -50,6 +48,7 @@ const ViewProducts = () => {
             console.log(err);
         }
     }
+
     return (
         <div>
             <div style={{ height: "100px" }}>
@@ -59,11 +58,9 @@ const ViewProducts = () => {
                             Page/Products
                         </p>
 
-                        {/* <Link to={"addproducts"}> */}
                         <button className="btn btn-primary" type="button" onClick={() => navigatetoAdd()}>
                             + Add
                         </button>
-                        {/* </Link>   */}
                     </div>
 
                 </nav>
