@@ -20,12 +20,25 @@ const Login = () => {
   const user = UseAuth();
   const from = loation.state?.from || '/';
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$/;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const signIn = async (e) => {
     e.preventDefault();
+
+    if (!email) {
+      toast.error("Email is required");
+      return;
+    } else if (!emailRegex.test(email)) {
+      toast.error("Email is not valid. Must be @gmail.com or @yahoo.com or @hotmail.com");
+      return;
+    } else if (!password) {
+      toast.error("Password is required");
+      return;
+    }
+
     setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
