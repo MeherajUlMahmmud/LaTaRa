@@ -76,6 +76,7 @@ const Cart = () => {
   </Helmet>
 }
 const Tr = ({ item }) => {
+  console.log(item);
   const dispatch = useDispatch();
   const Increments = () => {
     if (item.quantity + 1 > item.availableQuantity) {
@@ -83,7 +84,7 @@ const Tr = ({ item }) => {
     } else {
       dispatch(cartActions.addItem({
         id: item.id,
-        productName: item.product,
+        product: item.product,
         price: item.price,
         imgUrl: item.imgUrl,
         availableQuantity: item.availableQuantity
@@ -98,13 +99,12 @@ const Tr = ({ item }) => {
     else {
       dispatch(cartActions.decrementItem({
         id: item.id,
-        productName: item.product,
+        product: item.product,
         price: item.price,
         imgUrl: item.imgUrl,
+        availableQuantity: item.availableQuantity
       }))
-
     }
-
   }
   const deleteProduct = () => {
     dispatch(cartActions.deleteItem(item.id));
@@ -115,7 +115,7 @@ const Tr = ({ item }) => {
         <img src={item.imgUrl} alt="" />
       </td>
       <td>
-        {item.productName}
+        {item.product}
       </td>
       <td>
         Tk {item.price}

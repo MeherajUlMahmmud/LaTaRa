@@ -11,9 +11,10 @@ const ProductCard = ({ item }) => {
     const dispatch = useDispatch()
 
     const addToCart = () => {
+        console.log(item);
         dispatch(cartActions.addItem({
             id: item.id,
-            productName: item.productName,
+            product: item.product,
             price: item.price,
             imgUrl: item.imgUrl,
             availableQuantity: item.availableQuantity,

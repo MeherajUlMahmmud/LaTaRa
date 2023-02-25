@@ -19,7 +19,7 @@ const cartSlice = createSlice({
             if (!existingItem) {
                 state.cartItems.push({
                     id: newItem.id,
-                    productName: newItem.productName,
+                    product: newItem.product,
                     imgUrl: newItem.imgUrl,
                     price: newItem.price,
                     quantity: 1,
@@ -35,12 +35,7 @@ const cartSlice = createSlice({
                 total + Number(item.price) * Number(item.quantity), 0
             );
 
-
-            console.log("Total Quantity : ", state.totalQuantity);
             console.log("CartItems", state.cartItems);
-            console.log("Total Amount : ", state.totalAmount);
-            console.log('cartItems', newItem)
-            console.log('Existing Itme ==== ', existingItem)
         },
         deleteItem: (state, action) => {
             const id = action.payload;

@@ -49,6 +49,7 @@ const ProductDetails = () => {
         description,
         shortDesc,
         category,
+        availableQuantity,
     } = getProduct;
 
     // const relatedProducts = data?.filter((item)=> item.category === category);
@@ -168,9 +169,11 @@ const ProductDetails = () => {
         dispatch(
             cartActions.addItem({
                 id,
+                product: product,
                 imgUrl: imgUrl,
                 product,
                 price,
+                availableQuantity,
             })
         );
         toast.success("Product added Successfully!");
